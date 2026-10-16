@@ -2,12 +2,12 @@ import { router } from "expo-router";
 import { useCallback, useEffect } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 
+import AppLoader from "@/src/components/AppLoader";
 import { useColorScheme } from "@/src/components/useColorScheme";
 import { Colors } from "@/src/tokens/colors";
 
 import EmptyState from "../components/EmptyState";
 import ErrorState from "../components/ErrorState";
-import LoadingState from "../components/LoadingState";
 import TransactionListItem from "../components/TransactionListItem";
 import { useTransactionsStore } from "../store/useTransactionsStore";
 import type { Transaction } from "../types";
@@ -29,7 +29,7 @@ export default function TransactionsListScreen() {
   const hasData = transactions.length > 0;
 
   if ((status === "idle" || status === "loading") && !hasData) {
-    return <LoadingState />;
+    return <AppLoader title="Loading transactions…" />;
   }
 
   if (status === "error" && !hasData) {

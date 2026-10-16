@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
+import AppButton from '@/src/components/AppButton';
 import { Text, View } from '@/src/components/Themed';
 import { useColorScheme } from '@/src/components/useColorScheme';
-import { BorderRadius, Spacing } from '@/src/tokens/spacing';
 import { Colors } from '@/src/tokens/colors';
+import { Spacing } from '@/src/tokens/spacing';
 
 type Props = {
   message: string;
@@ -18,18 +19,12 @@ export default function ErrorState({ message, onRetry }: Props) {
     <View style={styles.container}>
       <Text style={[styles.title, { color: colors.status.danger }]}>Something went wrong</Text>
       <Text style={[styles.message, { color: colors.text.muted }]}>{message}</Text>
-      <Pressable
+      <AppButton
+        title="Retry"
         onPress={onRetry}
-        accessibilityRole="button"
         accessibilityLabel="Retry loading transactions"
-        style={({ pressed }) => [
-          styles.button,
-          { backgroundColor: colors.background.accent },
-          pressed && styles.pressed,
-        ]}
-      >
-        <Text style={[styles.buttonLabel, { color: colors.text.inverse }]}>Retry</Text>
-      </Pressable>
+        style={styles.button}
+      />
     </View>
   );
 }
@@ -52,15 +47,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: Spacing.sm,
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.xl,
-    borderRadius: BorderRadius.md,
-  },
-  buttonLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  pressed: {
-    opacity: 0.8,
+    minHeight: 44,
   },
 });

@@ -1,7 +1,8 @@
 import * as Haptics from 'expo-haptics';
 import { memo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
+import AppPressable from '@/src/components/AppPressable';
 import { Text } from '@/src/components/Themed';
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { Colors } from '@/src/tokens/colors';
@@ -27,15 +28,11 @@ function TransactionListItem({ transaction, onPress }: Props) {
   };
 
   return (
-    <Pressable
+    <AppPressable
       onPress={handlePress}
       accessibilityRole="button"
       accessibilityLabel={`${transaction.transferName}, ${formatDate(transaction.transferDate)}, ${formatCurrency(transaction.amount)}`}
-      style={({ pressed }) => [
-        styles.container,
-        { borderColor: colors.border.subtle },
-        pressed && styles.pressed,
-      ]}
+      style={[styles.container, { borderColor: colors.border.subtle }]}
     >
       <View style={styles.details}>
         <Text style={styles.transferName}>{transaction.transferName}</Text>
@@ -44,7 +41,7 @@ function TransactionListItem({ transaction, onPress }: Props) {
         </Text>
       </View>
       <TransactionAmount amount={transaction.amount} />
-    </Pressable>
+    </AppPressable>
   );
 }
 
@@ -58,9 +55,6 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.md,
     paddingHorizontal: Spacing.lg,
     borderBottomWidth: 1,
-  },
-  pressed: {
-    opacity: 0.6,
   },
   details: {
     flex: 1,

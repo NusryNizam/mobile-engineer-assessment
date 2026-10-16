@@ -1,28 +1,34 @@
-import { useLocalSearchParams } from 'expo-router';
-import { Pressable, Share, StyleSheet, View } from 'react-native';
+import { useLocalSearchParams } from "expo-router";
+import { Share, StyleSheet, View } from "react-native";
 
-import { Text } from '@/src/components/Themed';
-import { useColorScheme } from '@/src/components/useColorScheme';
-import { Colors } from '@/src/tokens/colors';
-import { BorderRadius, Spacing } from '@/src/tokens/spacing';
+import AppButton from "@/src/components/AppButton";
+import Divider from "@/src/components/Divider";
+import { Text } from "@/src/components/Themed";
+import { useColorScheme } from "@/src/components/useColorScheme";
+import { Colors } from "@/src/tokens/colors";
+import { BorderRadius, Spacing } from "@/src/tokens/spacing";
 
-import TransactionAmount from '../components/TransactionAmount';
-import { useTransactionsStore } from '../store/useTransactionsStore';
-import type { Transaction } from '../types';
-import { formatCurrency } from '../utils/formatCurrency';
-import { formatDate } from '../utils/formatDate';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import TransactionAmount from "../components/TransactionAmount";
+import { useTransactionsStore } from "../store/useTransactionsStore";
+import type { Transaction } from "../types";
+import { formatCurrency } from "../utils/formatCurrency";
+import { formatDate } from "../utils/formatDate";
 
-type ThemeColors = (typeof Colors)['light'];
+type ThemeColors = (typeof Colors)["light"];
 
 export default function TransactionDetailScreen() {
   const { refId } = useLocalSearchParams<{ refId: string }>();
   const theme = useColorScheme();
   const colors = Colors[theme];
   const transaction = useTransactionsStore((state) => state.getByRefId(refId));
+  const insets = useSafeAreaInsets();
 
   if (!transaction) {
     return (
-      <View style={[styles.center, { backgroundColor: colors.background.default }]}>
+      <View
+        style={[styles.center, { backgroundColor: colors.background.default }]}
+      >
         <Text style={{ color: colors.text.muted }}>Transaction not found.</Text>
       </View>
     );
@@ -33,35 +39,51 @@ export default function TransactionDetailScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background.default }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.background.default,
+          paddingBottom: insets.bottom,
+        },
+      ]}
+    >
       <View
         style={[
           styles.card,
-          { backgroundColor: colors.background.surface, borderColor: colors.border.subtle },
+          {
+            backgroundColor: colors.background.surface,
+            borderColor: colors.border.subtle,
+          },
         ]}
       >
         <Text style={styles.transferName}>{transaction.transferName}</Text>
         <TransactionAmount amount={transaction.amount} style={styles.amount} />
 
-        <View style={[styles.divider, { backgroundColor: colors.border.subtle }]} />
+        <Divider style={styles.divider} />
 
-        <DetailRow label="Reference ID" value={transaction.refId} colors={colors} />
-        <DetailRow label="Date" value={formatDate(transaction.transferDate)} colors={colors} />
-        <DetailRow label="Recipient" value={transaction.recipientName} colors={colors} />
+        <DetailRow
+          label="Reference ID"
+          value={transaction.refId}
+          colors={colors}
+        />
+        <DetailRow
+          label="Date"
+          value={formatDate(transaction.transferDate)}
+          colors={colors}
+        />
+        <DetailRow
+          label="Recipient"
+          value={transaction.recipientName}
+          colors={colors}
+        />
       </View>
 
-      <Pressable
+      <AppButton
+        title="Share"
         onPress={handleShare}
-        accessibilityRole="button"
         accessibilityLabel="Share transaction details"
-        style={({ pressed }) => [
-          styles.shareButton,
-          { backgroundColor: colors.background.accent },
-          pressed && styles.pressed,
-        ]}
-      >
-        <Text style={[styles.shareLabel, { color: colors.text.inverse }]}>Share</Text>
-      </Pressable>
+      />
     </View>
   );
 }
@@ -73,7 +95,7 @@ function buildShareMessage(transaction: Transaction): string {
     `Date: ${formatDate(transaction.transferDate)}`,
     `Recipient: ${transaction.recipientName}`,
     `Amount: ${formatCurrency(transaction.amount)}`,
-  ].join('\n');
+  ].join("\n");
 }
 
 function DetailRow({
@@ -87,7 +109,9 @@ function DetailRow({
 }) {
   return (
     <View style={styles.row}>
-      <Text style={[styles.rowLabel, { color: colors.text.muted }]}>{label}</Text>
+      <Text style={[styles.rowLabel, { color: colors.text.muted }]}>
+        {label}
+      </Text>
       <Text style={styles.rowValue}>{value}</Text>
     </View>
   );
@@ -97,36 +121,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: Spacing.lg,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   center: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   card: {
     borderRadius: BorderRadius.lg,
     borderWidth: 1,
     padding: Spacing.lg,
-    alignItems: 'center',
+    alignItems: "center",
   },
   transferName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   amount: {
     fontSize: 28,
     marginTop: Spacing.xs,
   },
   divider: {
-    alignSelf: 'stretch',
-    height: 1,
+    alignSelf: "stretch",
     marginVertical: Spacing.lg,
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignSelf: 'stretch',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "stretch",
     marginBottom: Spacing.sm,
   },
   rowLabel: {
@@ -134,18 +157,6 @@ const styles = StyleSheet.create({
   },
   rowValue: {
     fontSize: 14,
-    fontWeight: '500',
-  },
-  shareButton: {
-    alignItems: 'center',
-    paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.md,
-  },
-  shareLabel: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  pressed: {
-    opacity: 0.8,
+    fontWeight: "500",
   },
 });
