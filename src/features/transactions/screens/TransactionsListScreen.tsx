@@ -1,17 +1,25 @@
 import { router } from "expo-router";
-import { useCallback, useEffect } from "react";
-import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AppLoader from "@/src/components/AppLoader";
 import { useColorScheme } from "@/src/components/useColorScheme";
 import { Colors } from "@/src/tokens/colors";
+import { Spacing } from "@/src/tokens/spacing";
 
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import EmptyState from "../components/EmptyState";
 import ErrorState from "../components/ErrorState";
+import NoResultsState from "../components/NoResultsState";
+import SearchBar from "../components/SearchBar";
+import TransactionFilterTabs from "../components/TransactionFilterTabs";
 import TransactionListItem from "../components/TransactionListItem";
 import { useTransactionsStore } from "../store/useTransactionsStore";
 import type { Transaction } from "../types";
+import {
+  filterTransactions,
+  type TransactionFilter,
+} from "../utils/filterTransactions";
 
 export default function TransactionsListScreen() {
   const insets = useSafeAreaInsets();
@@ -19,6 +27,8 @@ export default function TransactionsListScreen() {
   const colors = Colors[theme];
   const { transactions, status, error, fetchTransactions } =
     useTransactionsStore();
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<TransactionFilter>("all");
 
   useEffect(() => {
     fetchTransactions();
@@ -28,7 +38,17 @@ export default function TransactionsListScreen() {
     router.push(`/transaction/${transaction.refId}`);
   }, []);
 
+  const handleClearFilters = useCallback(() => {
+    setQuery("");
+    setFilter("all");
+  }, []);
+
   const hasData = transactions.length > 0;
+  const hasActiveFilter = query.trim().length > 0 || filter !== "all";
+  const filteredTransactions = useMemo(
+    () => filterTransactions(transactions, query, filter),
+    [transactions, query, filter],
+  );
 
   if ((status === "idle" || status === "loading") && !hasData) {
     return <AppLoader title="Loading transactions…" />;
@@ -44,31 +64,56 @@ export default function TransactionsListScreen() {
   }
 
   return (
-    <FlatList
-      style={{ backgroundColor: colors.background.default }}
-      contentContainerStyle={
-        hasData
-          ? { ...styles.content, paddingBottom: insets.bottom }
-          : styles.emptyContent
-      }
-      data={transactions}
-      keyExtractor={(item) => item.refId}
-      renderItem={({ item }) => (
-        <TransactionListItem transaction={item} onPress={handlePressItem} />
+    <View
+      style={[styles.screen, { backgroundColor: colors.background.default }]}
+    >
+      {hasData && (
+        <View style={styles.toolbar}>
+          <SearchBar value={query} onChangeText={setQuery} />
+          <TransactionFilterTabs value={filter} onChange={setFilter} />
+        </View>
       )}
-      ListEmptyComponent={EmptyState}
-      refreshControl={
-        <RefreshControl
-          refreshing={status === "loading"}
-          onRefresh={fetchTransactions}
-          tintColor={colors.icon.default}
-        />
-      }
-    />
+      <FlatList
+        style={{ backgroundColor: colors.background.default }}
+        contentContainerStyle={
+          filteredTransactions.length > 0
+            ? { ...styles.content, paddingBottom: insets.bottom }
+            : styles.emptyContent
+        }
+        data={filteredTransactions}
+        keyExtractor={(item) => item.refId}
+        renderItem={({ item }) => (
+          <TransactionListItem transaction={item} onPress={handlePressItem} />
+        )}
+        ListEmptyComponent={
+          hasActiveFilter
+            ? () => <NoResultsState onClear={handleClearFilters} />
+            : EmptyState
+        }
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        refreshControl={
+          <RefreshControl
+            refreshing={status === "loading"}
+            onRefresh={fetchTransactions}
+            tintColor={colors.icon.default}
+          />
+        }
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  toolbar: {
+    paddingHorizontal: Spacing.lg,
+    paddingTop: Spacing.sm,
+    paddingBottom: Spacing.sm,
+    gap: Spacing.sm,
+  },
   content: {},
   emptyContent: {
     flexGrow: 1,
