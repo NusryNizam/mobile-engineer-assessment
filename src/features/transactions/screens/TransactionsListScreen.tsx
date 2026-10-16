@@ -6,6 +6,7 @@ import AppLoader from "@/src/components/AppLoader";
 import { useColorScheme } from "@/src/components/useColorScheme";
 import { Colors } from "@/src/tokens/colors";
 
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import EmptyState from "../components/EmptyState";
 import ErrorState from "../components/ErrorState";
 import TransactionListItem from "../components/TransactionListItem";
@@ -13,6 +14,7 @@ import { useTransactionsStore } from "../store/useTransactionsStore";
 import type { Transaction } from "../types";
 
 export default function TransactionsListScreen() {
+  const insets = useSafeAreaInsets();
   const theme = useColorScheme();
   const colors = Colors[theme];
   const { transactions, status, error, fetchTransactions } =
@@ -44,7 +46,11 @@ export default function TransactionsListScreen() {
   return (
     <FlatList
       style={{ backgroundColor: colors.background.default }}
-      contentContainerStyle={hasData ? styles.content : styles.emptyContent}
+      contentContainerStyle={
+        hasData
+          ? { ...styles.content, paddingBottom: insets.bottom }
+          : styles.emptyContent
+      }
       data={transactions}
       keyExtractor={(item) => item.refId}
       renderItem={({ item }) => (
