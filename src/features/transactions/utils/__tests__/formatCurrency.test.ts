@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/utils/formatCurrency';
+import { formatCurrency } from '../formatCurrency';
 
 describe('formatCurrency', () => {
   it('formats a positive amount with a dollar sign and two decimals', () => {

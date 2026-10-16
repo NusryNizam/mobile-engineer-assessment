@@ -1,5 +1,5 @@
-import { View } from "@/components/Themed";
-import { Spacing } from "@/tokens/spacing";
+import { View } from "@/src/components/Themed";
+import { Spacing } from "@/src/tokens/spacing";
 import { StyleSheet, Text } from "react-native";
 
 const Home = () => {

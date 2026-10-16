@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { fetchTransactions as fetchTransactionsFromApi } from '@/api/transactions';
-import type { Transaction } from '@/types/transaction';
+import { fetchTransactions as fetchTransactionsFromApi } from '../api/transactions';
+import type { Transaction } from '../types';
 
 export type TransactionsStatus = 'idle' | 'loading' | 'success' | 'error';
 

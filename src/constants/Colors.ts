@@ -1,4 +1,4 @@
-import { Colors as Tokens } from '@/tokens/colors';
+import { Colors as Tokens } from '@/src/tokens/colors';
 
 export default {
   light: {

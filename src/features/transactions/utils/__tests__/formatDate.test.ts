@@ -1,4 +1,4 @@
-import { formatDate } from '@/utils/formatDate';
+import { formatDate } from '../formatDate';
 
 describe('formatDate', () => {
   it('formats an ISO-8601 UTC timestamp as a short readable date', () => {

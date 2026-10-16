@@ -1,11 +1,11 @@
-import { useTransactionsStore } from '@/store/useTransactionsStore';
-import type { Transaction } from '@/types/transaction';
+import { useTransactionsStore } from '../useTransactionsStore';
+import type { Transaction } from '../../types';
 
-jest.mock('@/api/transactions', () => ({
+jest.mock('../../api/transactions', () => ({
   fetchTransactions: jest.fn(),
 }));
 
-import { fetchTransactions } from '@/api/transactions';
+import { fetchTransactions } from '../../api/transactions';
 
 const mockTransactions: Transaction[] = [
   {
