@@ -1,10 +1,11 @@
-import { PressableProps, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
+import { PressableProps, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { Colors } from '@/src/tokens/colors';
 import { BorderRadius, Spacing } from '@/src/tokens/spacing';
 
 import AppActivityIndicator from './AppActivityIndicator';
 import AppPressable from './AppPressable';
+import AppText from './AppText';
 import { useColorScheme } from './useColorScheme';
 
 type ButtonVariant = 'fill' | 'outline' | 'tonal' | 'ghost';
@@ -69,7 +70,9 @@ export default function AppButton({
       {loading ? (
         <AppActivityIndicator color={variantStyle[variant].color} />
       ) : (
-        <Text style={[styles.label, { color: variantStyle[variant].color }]}>{title}</Text>
+        <AppText variant="button" style={{ color: variantStyle[variant].color }}>
+          {title}
+        </AppText>
       )}
     </AppPressable>
   );
@@ -84,10 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: Spacing.sm,
-  },
-  label: {
-    fontSize: 15,
-    fontWeight: '600',
   },
   disabled: {
     opacity: 0.6,

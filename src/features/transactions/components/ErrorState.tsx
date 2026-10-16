@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 import AppButton from '@/src/components/AppButton';
-import { Text, View } from '@/src/components/Themed';
+import AppText from '@/src/components/AppText';
+import { View } from '@/src/components/Themed';
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { Colors } from '@/src/tokens/colors';
 import { Spacing } from '@/src/tokens/spacing';
@@ -17,8 +18,12 @@ export default function ErrorState({ message, onRetry }: Props) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.status.danger }]}>Something went wrong</Text>
-      <Text style={[styles.message, { color: colors.text.muted }]}>{message}</Text>
+      <AppText variant="title" style={{ color: colors.status.danger }}>
+        Something went wrong
+      </AppText>
+      <AppText variant="body" style={[styles.message, { color: colors.text.muted }]}>
+        {message}
+      </AppText>
       <AppButton
         title="Retry"
         onPress={onRetry}
@@ -37,12 +42,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     gap: Spacing.sm,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
   message: {
-    fontSize: 14,
     textAlign: 'center',
   },
   button: {

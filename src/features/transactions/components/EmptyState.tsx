@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { Text, View } from '@/src/components/Themed';
+import AppText from '@/src/components/AppText';
+import { View } from '@/src/components/Themed';
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { Colors } from '@/src/tokens/colors';
 import { Spacing } from '@/src/tokens/spacing';
@@ -11,10 +12,10 @@ export default function EmptyState() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>No transactions yet</Text>
-      <Text style={[styles.subtitle, { color: colors.text.muted }]}>
+      <AppText variant="title">No transactions yet</AppText>
+      <AppText variant="body" style={[styles.subtitle, { color: colors.text.muted }]}>
         Your incoming and outgoing transfers will show up here.
-      </Text>
+      </AppText>
     </View>
   );
 }
@@ -27,12 +28,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.xl,
     gap: Spacing.xs,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
   subtitle: {
-    fontSize: 14,
     textAlign: 'center',
   },
 });

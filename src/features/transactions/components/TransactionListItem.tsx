@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import AppPressable from '@/src/components/AppPressable';
-import { Text } from '@/src/components/Themed';
+import AppText from '@/src/components/AppText';
 import { useColorScheme } from '@/src/components/useColorScheme';
 import { Colors } from '@/src/tokens/colors';
 import { Spacing } from '@/src/tokens/spacing';
@@ -35,10 +35,10 @@ function TransactionListItem({ transaction, onPress }: Props) {
       style={[styles.container, { borderColor: colors.border.subtle }]}
     >
       <View style={styles.details}>
-        <Text style={styles.transferName}>{transaction.transferName}</Text>
-        <Text style={[styles.date, { color: colors.text.muted }]}>
+        <AppText variant="title">{transaction.transferName}</AppText>
+        <AppText variant="caption" style={[styles.date, { color: colors.text.muted }]}>
           {formatDate(transaction.transferDate)}
-        </Text>
+        </AppText>
       </View>
       <TransactionAmount amount={transaction.amount} />
     </AppPressable>
@@ -60,12 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: Spacing.sm,
   },
-  transferName: {
-    fontSize: 16,
-    fontWeight: '500',
-  },
   date: {
-    fontSize: 13,
     marginTop: Spacing.xxs,
   },
 });
