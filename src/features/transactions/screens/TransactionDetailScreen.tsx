@@ -1,21 +1,21 @@
-import { useLocalSearchParams } from 'expo-router';
-import { Share, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useLocalSearchParams } from "expo-router";
+import { Share, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import AppButton from '@/src/components/AppButton';
-import AppText from '@/src/components/AppText';
-import Divider from '@/src/components/Divider';
-import { useColorScheme } from '@/src/components/useColorScheme';
-import { Colors } from '@/src/tokens/colors';
-import { BorderRadius, Spacing } from '@/src/tokens/spacing';
+import AppButton from "@/src/components/AppButton";
+import AppText from "@/src/components/AppText";
+import Divider from "@/src/components/Divider";
+import { useColorScheme } from "@/src/components/useColorScheme";
+import { Colors } from "@/src/tokens/colors";
+import { BorderRadius, Spacing } from "@/src/tokens/spacing";
 
-import TransactionAmount from '../components/TransactionAmount';
-import { useTransactionsStore } from '../store/useTransactionsStore';
-import type { Transaction } from '../types';
-import { formatCurrency } from '../utils/formatCurrency';
-import { formatDate } from '../utils/formatDate';
+import TransactionAmount from "../components/TransactionAmount";
+import { useTransactionsStore } from "../store/useTransactionsStore";
+import type { Transaction } from "../types";
+import { formatCurrency } from "../utils/formatCurrency";
+import { formatDate } from "../utils/formatDate";
 
-type ThemeColors = (typeof Colors)['light'];
+type ThemeColors = (typeof Colors)["light"];
 
 export default function TransactionDetailScreen() {
   const { refId } = useLocalSearchParams<{ refId: string }>();
@@ -26,7 +26,9 @@ export default function TransactionDetailScreen() {
 
   if (!transaction) {
     return (
-      <View style={[styles.center, { backgroundColor: colors.background.default }]}>
+      <View
+        style={[styles.center, { backgroundColor: colors.background.default }]}
+      >
         <AppText variant="body" style={{ color: colors.text.muted }}>
           Transaction not found.
         </AppText>
@@ -42,13 +44,19 @@ export default function TransactionDetailScreen() {
     <View
       style={[
         styles.container,
-        { backgroundColor: colors.background.default, paddingBottom: insets.bottom },
+        {
+          backgroundColor: colors.background.default,
+          paddingBottom: insets.bottom,
+        },
       ]}
     >
       <View
         style={[
           styles.card,
-          { backgroundColor: colors.background.surface, borderColor: colors.border.subtle },
+          {
+            backgroundColor: colors.background.surface,
+            borderColor: colors.border.subtle,
+          },
         ]}
       >
         <AppText variant="title">{transaction.transferName}</AppText>
@@ -60,9 +68,21 @@ export default function TransactionDetailScreen() {
 
         <Divider style={styles.divider} />
 
-        <DetailRow label="Reference ID" value={transaction.refId} colors={colors} />
-        <DetailRow label="Date" value={formatDate(transaction.transferDate)} colors={colors} />
-        <DetailRow label="Recipient" value={transaction.recipientName} colors={colors} />
+        <DetailRow
+          label="Reference ID"
+          value={transaction.refId}
+          colors={colors}
+        />
+        <DetailRow
+          label="Date"
+          value={formatDate(transaction.transferDate)}
+          colors={colors}
+        />
+        <DetailRow
+          label="Recipient"
+          value={transaction.recipientName}
+          colors={colors}
+        />
       </View>
 
       <AppButton
@@ -81,7 +101,7 @@ function buildShareMessage(transaction: Transaction): string {
     `Date: ${formatDate(transaction.transferDate)}`,
     `Recipient: ${transaction.recipientName}`,
     `Amount: ${formatCurrency(transaction.amount)}`,
-  ].join('\n');
+  ].join("\n");
 }
 
 function DetailRow({
@@ -109,30 +129,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: Spacing.lg,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   center: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   card: {
     borderRadius: BorderRadius.lg,
     borderWidth: 1,
     padding: Spacing.lg,
-    alignItems: 'center',
+    alignItems: "center",
   },
   amountSpacing: {
     marginTop: Spacing.xs,
   },
   divider: {
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
     marginVertical: Spacing.lg,
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignSelf: 'stretch',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "stretch",
     marginBottom: Spacing.sm,
   },
 });

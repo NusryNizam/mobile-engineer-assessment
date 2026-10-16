@@ -1,17 +1,17 @@
-import * as Haptics from 'expo-haptics';
-import { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import * as Haptics from "expo-haptics";
+import { memo } from "react";
+import { StyleSheet, View } from "react-native";
 
-import AppPressable from '@/src/components/AppPressable';
-import AppText from '@/src/components/AppText';
-import { useColorScheme } from '@/src/components/useColorScheme';
-import { Colors } from '@/src/tokens/colors';
-import { Spacing } from '@/src/tokens/spacing';
+import AppPressable from "@/src/components/AppPressable";
+import AppText from "@/src/components/AppText";
+import { useColorScheme } from "@/src/components/useColorScheme";
+import { Colors } from "@/src/tokens/colors";
+import { Spacing } from "@/src/tokens/spacing";
 
-import type { Transaction } from '../types';
-import { formatCurrency } from '../utils/formatCurrency';
-import { formatDate } from '../utils/formatDate';
-import TransactionAmount from './TransactionAmount';
+import type { Transaction } from "../types";
+import { formatCurrency } from "../utils/formatCurrency";
+import { formatDate } from "../utils/formatDate";
+import TransactionAmount from "./TransactionAmount";
 
 type Props = {
   transaction: Transaction;
@@ -32,11 +32,20 @@ function TransactionListItem({ transaction, onPress }: Props) {
       onPress={handlePress}
       accessibilityRole="button"
       accessibilityLabel={`${transaction.transferName}, ${formatDate(transaction.transferDate)}, ${formatCurrency(transaction.amount)}`}
-      style={[styles.container, { borderColor: colors.border.subtle }]}
+      style={[
+        styles.container,
+        {
+          borderColor: colors.border.subtle,
+          backgroundColor: colors.background.surface,
+        },
+      ]}
     >
       <View style={styles.details}>
         <AppText variant="title">{transaction.transferName}</AppText>
-        <AppText variant="caption" style={[styles.date, { color: colors.text.muted }]}>
+        <AppText
+          variant="caption"
+          style={[styles.date, { color: colors.text.muted }]}
+        >
           {formatDate(transaction.transferDate)}
         </AppText>
       </View>
@@ -49,9 +58,9 @@ export default memo(TransactionListItem);
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingVertical: Spacing.md,
     paddingHorizontal: Spacing.lg,
     borderBottomWidth: 1,

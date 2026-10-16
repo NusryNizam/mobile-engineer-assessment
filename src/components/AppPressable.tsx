@@ -1,16 +1,25 @@
-import { Pressable, PressableProps, StyleSheet } from 'react-native';
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 
 type Props = PressableProps;
 
-export default function AppPressable({ children, style, disabled, ...props }: Props) {
+export default function AppPressable({
+  children,
+  style,
+  disabled,
+  ...props
+}: Props) {
   return (
     <Pressable
       {...props}
       disabled={disabled}
       style={(state) => {
-        const resolvedStyle = typeof style === 'function' ? style(state) : style;
+        const resolvedStyle =
+          typeof style === "function" ? style(state) : style;
 
-        return [resolvedStyle, state.pressed && !disabled && props.onPress && styles.pressed];
+        return [
+          resolvedStyle,
+          state.pressed && !disabled && props.onPress && styles.pressed,
+        ];
       }}
     >
       {children}

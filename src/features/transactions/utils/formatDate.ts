@@ -4,10 +4,10 @@
  * is deterministic and matches the date the backend recorded.
  */
 export function formatDate(isoDate: string): string {
-  return new Date(isoDate).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
+  return new Date(isoDate).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
   });
 }

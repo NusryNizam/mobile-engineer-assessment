@@ -1,6 +1,6 @@
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
 });
 
 /** Formats a signed amount, e.g. 1500 -> "$1,500.00", -500 -> "-$500.00" */

@@ -1,10 +1,10 @@
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Colors } from '@/src/tokens/colors';
-import { Spacing } from '@/src/tokens/spacing';
+import { Colors } from "@/src/tokens/colors";
+import { Spacing } from "@/src/tokens/spacing";
 
-import AppText from './AppText';
-import { useColorScheme } from './useColorScheme';
+import AppText from "./AppText";
+import { useColorScheme } from "./useColorScheme";
 
 type Props = {
   text?: string;
@@ -23,7 +23,10 @@ export default function Divider({ text, style }: Props) {
           variant="caption"
           style={[
             styles.text,
-            { color: colors.text.muted, backgroundColor: colors.background.surface },
+            {
+              color: colors.text.muted,
+              backgroundColor: colors.background.surface,
+            },
           ]}
         >
           {text}
@@ -36,8 +39,8 @@ export default function Divider({ text, style }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   line: {
     height: StyleSheet.hairlineWidth,

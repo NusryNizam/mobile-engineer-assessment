@@ -1,14 +1,14 @@
-import { PressableProps, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { PressableProps, StyleSheet, TextStyle, ViewStyle } from "react-native";
 
-import { Colors } from '@/src/tokens/colors';
-import { BorderRadius, Spacing } from '@/src/tokens/spacing';
+import { Colors } from "@/src/tokens/colors";
+import { BorderRadius, Spacing } from "@/src/tokens/spacing";
 
-import AppActivityIndicator from './AppActivityIndicator';
-import AppPressable from './AppPressable';
-import AppText from './AppText';
-import { useColorScheme } from './useColorScheme';
+import AppActivityIndicator from "./AppActivityIndicator";
+import AppPressable from "./AppPressable";
+import AppText from "./AppText";
+import { useColorScheme } from "./useColorScheme";
 
-type ButtonVariant = 'fill' | 'outline' | 'tonal' | 'ghost';
+type ButtonVariant = "fill" | "outline" | "tonal" | "ghost";
 
 type Props = {
   title: string;
@@ -19,7 +19,7 @@ type Props = {
 
 export default function AppButton({
   title,
-  variant = 'fill',
+  variant = "fill",
   disabled,
   onPress,
   loading,
@@ -42,7 +42,7 @@ export default function AppButton({
     },
     tonal: {
       color: colors.text.secondary,
-      backgroundColor: colors.background.accent + '18',
+      backgroundColor: colors.background.accent + "18",
     },
     ghost: {
       color: colors.text.secondary,
@@ -57,7 +57,8 @@ export default function AppButton({
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? title}
       style={(state) => {
-        const resolvedStyle = typeof style === 'function' ? style(state) : style;
+        const resolvedStyle =
+          typeof style === "function" ? style(state) : style;
 
         return [
           variantStyle[variant],
@@ -70,7 +71,10 @@ export default function AppButton({
       {loading ? (
         <AppActivityIndicator color={variantStyle[variant].color} />
       ) : (
-        <AppText variant="button" style={{ color: variantStyle[variant].color }}>
+        <AppText
+          variant="button"
+          style={{ color: variantStyle[variant].color }}
+        >
           {title}
         </AppText>
       )}
@@ -83,9 +87,9 @@ const styles = StyleSheet.create({
     minHeight: 52,
     paddingHorizontal: Spacing.xl,
     borderRadius: BorderRadius.pill,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
     gap: Spacing.sm,
   },
   disabled: {
