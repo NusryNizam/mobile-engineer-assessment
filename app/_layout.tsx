@@ -45,8 +45,21 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="index" options={{ title: "Transactions" }} />
+      <Stack
+        screenOptions={{
+          headerBackButtonDisplayMode: "minimal",
+        }}
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Transactions",
+          }}
+        />
+        <Stack.Screen
+          name="transaction/[refId]"
+          options={{ title: "Transaction Details" }}
+        />
       </Stack>
     </ThemeProvider>
   );

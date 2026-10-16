@@ -1,20 +1,3 @@
-import { View } from "@/src/components/Themed";
-import { Spacing } from "@/src/tokens/spacing";
-import { StyleSheet, Text } from "react-native";
+import TransactionsListScreen from '@/src/features/transactions/screens/TransactionsListScreen';
 
-const Home = () => {
-  return (
-    <View style={styles.container}>
-      <Text>Home</Text>
-    </View>
-  );
-};
-
-export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: Spacing.md,
-  },
-});
+export default TransactionsListScreen;
