@@ -3,6 +3,28 @@
 A React Native (Expo) app for viewing recent bank transactions for AEON Bank - Mobile Engineer assessment
 This contains a list of latest incoming/outgoing transfers, and a detail screen per transaction with a share action.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="docs/screenshots/transactions-list.png" width="240" alt="Transactions list, sorted latest-first with green/red amounts" />
+      <br />
+      <sub>Transactions list</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/search-filter.png" width="240" alt="Search box and Income/Expense filter narrowing the list" />
+      <br />
+      <sub>Search + filter</sub>
+    </td>
+    <td align="center">
+      <img src="docs/screenshots/transaction-detail.png" width="240" alt="Transaction detail screen with reference ID, date, recipient, amount, and a Share button" />
+      <br />
+      <sub>Transaction detail</sub>
+    </td>
+  </tr>
+</table>
+
 ## Getting started
 
 Prerequisites: Node.js, and either [Bun](https://bun.sh) (this repo uses `bun.lock`) or npm,
