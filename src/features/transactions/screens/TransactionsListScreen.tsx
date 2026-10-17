@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import debounce from "lodash.debounce";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -34,9 +35,23 @@ export default function TransactionsListScreen() {
     fetchTransactions();
   }, [fetchTransactions]);
 
-  const handlePressItem = useCallback((transaction: Transaction) => {
-    router.push(`/transaction/${transaction.refId}`);
-  }, []);
+  const handlePressItem = useMemo(
+    () =>
+      debounce(
+        (transaction: Transaction) => {
+          router.push(`/transaction/${transaction.refId}`);
+        },
+        800,
+        { leading: true, trailing: false },
+      ),
+    [],
+  );
+
+  useEffect(() => {
+    return () => {
+      handlePressItem.cancel();
+    };
+  }, [handlePressItem]);
 
   const handleClearFilters = useCallback(() => {
     setQuery("");
